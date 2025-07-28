@@ -3,15 +3,16 @@ module "s3_artifact_bucket" {
   artifact_bucket_name = var.artifact_bucket_name
 }
 
-module "ec2" {
-  source              = "./modules/ec2"
-  ec2_tag_name_value  = var.ec2_tag_name_value
-  iam_instance_profile_name = module.iam.codedeploy_instance_profile_name
-}
-
 module "iam" {
   source              = "./modules/iam"
   artifact_bucket_arn = module.s3_artifact_bucket.artifact_bucket_arn
+}
+
+module "ec2" {
+  source                    = "./modules/ec2"
+  ec2_tag_name_value        = var.ec2_tag_name_value
+  ec2_key_pair_name         = var.ec2_key_pair_name
+  iam_instance_profile_name = module.iam.codedeploy_instance_profile_name
 }
 
 module "codebuild" {

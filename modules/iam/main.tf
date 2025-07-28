@@ -1,6 +1,6 @@
-################
-# CodePipeline #
-################
+#################################
+# IAM Role for CodePipeline
+#################################
 data "aws_iam_policy_document" "codepipeline_assume" {
   statement {
     effect = "Allow"
@@ -32,9 +32,9 @@ resource "aws_iam_role_policy_attachment" "codepipeline_codebuild" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeBuildDeveloperAccess"
 }
 
-###############
-# CodeBuild   #
-###############
+#################################
+# IAM Role for CodeBuild
+#################################
 data "aws_iam_policy_document" "codebuild_assume" {
   statement {
     effect = "Allow"
@@ -53,12 +53,12 @@ resource "aws_iam_role" "codebuild" {
 
 resource "aws_iam_role_policy_attachment" "codebuild_attach" {
   role       = aws_iam_role.codebuild.name
-  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess" # For demo simplicity. Use least-privilege in production!
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
 
-################
-# CodeDeploy   #
-################
+#################################
+# IAM Role for CodeDeploy
+#################################
 data "aws_iam_policy_document" "codedeploy_assume" {
   statement {
     effect = "Allow"
@@ -80,9 +80,9 @@ resource "aws_iam_role_policy_attachment" "codedeploy_attach" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
 }
 
-####################################
-# CodeDeploy EC2 Instance Profile  #
-####################################
+#########################################
+# EC2 Instance Role for CodeDeploy Agent
+#########################################
 data "aws_iam_policy_document" "ec2_assume" {
   statement {
     effect = "Allow"
@@ -113,3 +113,4 @@ resource "aws_iam_instance_profile" "codedeploy_ec2_profile" {
   name = "codedeploy-ec2-profile"
   role = aws_iam_role.codedeploy_instance_role.name
 }
+
