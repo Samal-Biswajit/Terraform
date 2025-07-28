@@ -1,0 +1,54 @@
+name: 'Terraform CI/CD'
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-1
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Terraform Init
+      run: terraform init
+
+    - name: Terraform Validate
+      run: terraform validate
+
+    - name: Terraform Plan
+      env:
+        GH_OAUTH_TOKEN: ${{ secrets.GH_OAUTH_TOKEN }}
+        ARTIFACT_BUCKET_NAME: ${{ secrets.ARTIFACT_BUCKET_NAME }}
+        EC2_TAG_NAME_VALUE: ${{ secrets.EC2_TAG_NAME_VALUE }}
+      run: terraform plan -var "github_oauth_token=$GH_OAUTH_TOKEN" -var "artifact_bucket_name=$ARTIFACT_BUCKET_NAME" -var "ec2_tag_name_value=$EC2_TAG_NAME_VALUE" -var "github_owner=Biswajits-Hub" -var "github_repo=terraform" -var "github_branch=main"
+
+      
+    - name: Terraform Apply
+      env:
+        GH_OAUTH_TOKEN: ${{ secrets.GH_OAUTH_TOKEN }}
+        ARTIFACT_BUCKET_NAME: ${{ secrets.ARTIFACT_BUCKET_NAME }}
+        EC2_TAG_NAME_VALUE: ${{ secrets.EC2_TAG_NAME_VALUE }}
+      run: terraform apply -auto-approve -var "github_owner=Biswajits-Hub" -var "github_oauth_token=$GH_OAUTH_TOKEN" -var "artifact_bucket_name=$ARTIFACT_BUCKET_NAME" -var "ec2_tag_name_value=$EC2_TAG_NAME_VALUE" -var "github_repo=terraform"
+    # Uncomment for automated applies (production use requires care):
+    # - name: Terraform Apply
+    # 
+    #   run: terraform apply -auto-approved
+    

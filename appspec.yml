@@ -1,0 +1,12 @@
+version: 0.0
+os: linux
+files:
+  - source: app/index.html
+    destination: /var/www/html
+
+hooks:
+  ApplicationStop: []
+  AfterInstall:
+    - location: app/scripts/after_install.sh
+      timeout: 180
+      runas: root

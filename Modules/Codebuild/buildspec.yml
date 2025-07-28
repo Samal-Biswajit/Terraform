@@ -1,0 +1,9 @@
+# modules/codebuild/buildspec.yml
+version: 0.2
+phases:
+  build:
+    commands:
+      - echo "Hello, Build World!"
+artifacts:
+  files:
+    - '**/*'
