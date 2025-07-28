@@ -35,3 +35,9 @@ variable "ec2_tag_name_value" {
   description = "Value of the EC2 'Name' tag for CodeDeploy deployment group targeting"
   type        = string
 }
+
+variable "ec2_key_pair_name" {
+  description = "The name of the existing EC2 Key Pair to use"
+  type        = string
+}
+
