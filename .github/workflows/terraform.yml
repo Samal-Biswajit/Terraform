@@ -33,38 +33,37 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
-     - name: Terraform Plan
-  env:
-    GH_OAUTH_TOKEN: ${{ secrets.GH_OAUTH_TOKEN }}
-    ARTIFACT_BUCKET_NAME: ${{ secrets.ARTIFACT_BUCKET_NAME }}
-    EC2_TAG_NAME_VALUE: ${{ secrets.EC2_TAG_NAME_VALUE }}
-    EC2_KEY_PAIR_NAME: ${{ secrets.EC2_KEY_PAIR_NAME }}
-  run: |
-    terraform plan \
-      -var="github_owner=Samal-Biswajit" \
-      -var="github_repo=Terraform" \
-      -var="github_branch=main" \
-      -var="github_oauth_token=$GH_OAUTH_TOKEN" \
-      -var="artifact_bucket_name=$ARTIFACT_BUCKET_NAME" \
-      -var="ec2_tag_name_value=$EC2_TAG_NAME_VALUE" \
-      -var="ec2_key_pair_name=$EC2_KEY_PAIR_NAME"
+      - name: Terraform Plan
+        env:
+          GH_OAUTH_TOKEN: ${{ secrets.GH_OAUTH_TOKEN }}
+          ARTIFACT_BUCKET_NAME: ${{ secrets.ARTIFACT_BUCKET_NAME }}
+          EC2_TAG_NAME_VALUE: ${{ secrets.EC2_TAG_NAME_VALUE }}
+          EC2_KEY_PAIR_NAME: ${{ secrets.EC2_KEY_PAIR_NAME }}
+        run: |
+          terraform plan \
+            -var="github_owner=Samal-Biswajit" \
+            -var="github_repo=Terraform" \
+            -var="github_branch=main" \
+            -var="github_oauth_token=$GH_OAUTH_TOKEN" \
+            -var="artifact_bucket_name=$ARTIFACT_BUCKET_NAME" \
+            -var="ec2_tag_name_value=$EC2_TAG_NAME_VALUE" \
+            -var="ec2_key_pair_name=$EC2_KEY_PAIR_NAME"
 
-
-- name: Terraform Apply
-  env:
-    GH_OAUTH_TOKEN: ${{ secrets.GH_OAUTH_TOKEN }}
-    ARTIFACT_BUCKET_NAME: ${{ secrets.ARTIFACT_BUCKET_NAME }}
-    EC2_TAG_NAME_VALUE: ${{ secrets.EC2_TAG_NAME_VALUE }}
-    EC2_KEY_PAIR_NAME: ${{ secrets.EC2_KEY_PAIR_NAME }}
-  run: |
-    terraform apply -auto-approve \
-      -var="github_owner=Samal-Biswajit" \
-      -var="github_repo=Terraform" \
-      -var="github_branch=main" \
-      -var="github_oauth_token=$GH_OAUTH_TOKEN" \
-      -var="artifact_bucket_name=$ARTIFACT_BUCKET_NAME" \
-      -var="ec2_tag_name_value=$EC2_TAG_NAME_VALUE" \
-      -var="ec2_key_pair_name=$EC2_KEY_PAIR_NAME"
+      - name: Terraform Apply
+        env:
+          GH_OAUTH_TOKEN: ${{ secrets.GH_OAUTH_TOKEN }}
+          ARTIFACT_BUCKET_NAME: ${{ secrets.ARTIFACT_BUCKET_NAME }}
+          EC2_TAG_NAME_VALUE: ${{ secrets.EC2_TAG_NAME_VALUE }}
+          EC2_KEY_PAIR_NAME: ${{ secrets.EC2_KEY_PAIR_NAME }}
+        run: |
+          terraform apply -auto-approve \
+            -var="github_owner=Samal-Biswajit" \
+            -var="github_repo=Terraform" \
+            -var="github_branch=main" \
+            -var="github_oauth_token=$GH_OAUTH_TOKEN" \
+            -var="artifact_bucket_name=$ARTIFACT_BUCKET_NAME" \
+            -var="ec2_tag_name_value=$EC2_TAG_NAME_VALUE" \
+            -var="ec2_key_pair_name=$EC2_KEY_PAIR_NAME"
 
 
 
