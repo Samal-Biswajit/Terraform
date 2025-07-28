@@ -1,7 +1,7 @@
 resource "aws_instance" "cd_target" {
   ami = "ami-0f5ee92e2d63afc18" # Ubuntu Server 22.04 LTS (ap-south-1)
   instance_type          = "t2.micro"
-  subnet_id              = "subnet-08cd3b75f943c88c4"
+  subnet_id              = "subnet-0def79427f0d225af"
   iam_instance_profile   = var.iam_instance_profile_name
   key_name               = var.ec2_key_pair_name           # ✅ Added Key Pair
 
