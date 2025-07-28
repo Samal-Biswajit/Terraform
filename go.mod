@@ -1,4 +1,4 @@
-module github.com/Biswajits-Hub/terraform
+module github.com/Samal-Biswajit/Terraform
 
 go 1.24.5
 
